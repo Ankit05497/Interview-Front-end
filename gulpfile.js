@@ -9,6 +9,8 @@ const babel = require('gulp-babel');
 const eslint = require('gulp-eslint');
 const stylelint = require('gulp-stylelint');
 const browserSync = require('browser-sync');
+const svgmin = require('gulp-svgmin');
+const imagemin = require('gulp-imagemin');
 
 gulp.task('twig', () => {
   return gulp
@@ -39,6 +41,18 @@ gulp.task('stylelint', () => {
   );
 });
 
+gulp.task('svgminify',() => {
+  return gulp.src('src/assets/svg/*.svg')
+  .pipe(svgmin())
+  .pipe(gulp.dest('dist/assets'))
+});
+
+gulp.task('imagemin',()=> {
+  return gulp.src('src/assets/background/*.png')
+  .pipe(imagemin())
+  .pipe(gulp.dest('dist/assets'))
+})
+
 gulp.task('babel', () => {
   return gulp
     .src('src/js/*.js')
@@ -66,7 +80,8 @@ gulp.task('browsersync', () => {
 });
 
 gulp.task('lint', gulp.parallel('stylelint', 'eslint'));
-gulp.task('build', gulp.parallel('twig', 'sass', 'babel'));
-gulp.task('server', gulp.series('build', gulp.parallel('browsersync')));
+gulp.task('build', gulp.parallel('twig', 'sass', 'babel','svgminify','imagemin'));
+//gulp.task('server', gulp.series('build', gulp.parallel('browsersync')));
+gulp.task('server', gulp.series('build', 'browsersync'));
 
 gulp.task('default', gulp.series('lint', 'build'));
