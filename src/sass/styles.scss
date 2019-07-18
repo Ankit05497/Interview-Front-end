@@ -130,3 +130,29 @@ header {
     }
   }
 }
+
+.company-description {
+  display: flex;
+  flex-direction: column;
+  @include breakpoint($tab-view) {
+    margin: 40px 42px;
+    flex-direction: row;
+  }
+  h2 {
+    color: #484340;
+    margin-bottom: 50px;
+    @include breakpoint($tab-view) {
+      margin-bottom: 11px;
+    }
+  }
+  p {
+    color: #4C4744;
+  }
+  .company-description-text {
+    margin: 60px 14px 19px 11px;
+    @include breakpoint($tab-view) {
+      margin: 0;
+      width: 50%;
+    }
+  }
+}
